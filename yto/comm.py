@@ -5,6 +5,7 @@
 from datetime import datetime
 import hashlib
 import requests
+from autils import DateTime
 
 TESTURL = "http://opentestapi.yto.net.cn/service/{}/v1/wsdJFM"
 URL = ""
@@ -40,7 +41,7 @@ class Comm(object):
         提交验证
         """
         url = (TESTURL if self.sandbox else URL).format(self.service)
-        time = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
+        time = DateTime(datetime.now()).to_local_time_str()
         data.update({
             "sign": self._gen_sign(method, time=time),
             "app_key": self.appkey,
@@ -48,10 +49,10 @@ class Comm(object):
             "method": method,
             "timestamp": time,
             "user_id": self.user_id,
+            "v": "1.01"
         })
         url = f"{url}?{'&'.join(f'{k}={v}' for k,v in data.items() if v)}"
         res = requests.post(url, headers={
-            "Content-Type": "application/x-www-form-urlencoded"
-        })
-
-        return res.content
+            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+        }).json()
+        return res
