@@ -5,7 +5,7 @@
 from datetime import datetime
 import hashlib
 import requests
-from autils import DateTime
+from autils.datetime import DateTime
 
 TESTURL = "http://opentestapi.yto.net.cn/service/{}/v1/wsdJFM"
 URL = ""
