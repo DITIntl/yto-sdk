@@ -29,6 +29,10 @@ class TestQuery(unittest.TestCase):
         res = self.yto.query.get_city_by_state("2330102")
         self.assertGreater(len(res), 0, res)
 
+    def test_get_network_by_city(self):
+        res = self.yto.query.get_network_by_city("3450902")
+        self.assertEqual(res[0]["Station_Code"], "775003")
+
 
 if __name__ == "__main__":
     unittest.main()

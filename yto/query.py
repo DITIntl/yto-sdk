@@ -99,4 +99,18 @@ class Query(Comm):
                 "Code": code
             }]
         }
-        return self.post("yto.BaseData.ProvinceOfCity",data=data)
+        return self.post("yto.BaseData.ProvinceOfCity", data=data)
+
+    def get_network_by_city(self, code):
+        """
+        根据市ID查询下属网点接口
+        param code: 市ID。
+        调用根据省ID查询市接口成功后，会返回Id字段，该字段值就是市ID
+        """
+        self.service = "subnetwork_query"
+        data = {
+            "param": [{
+                "Code": code
+            }]
+        }
+        return self.post("yto.BaseData.CityOfStation", data=data)
